@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Web3 from 'web3';
 import { getBlockchainData } from './metamask-connection.js';
 import { erc20Address, gasFactor, getContractNft, getContractStaking, nftAddress, os, stakingAddress } from './smart-contracts-config.js';
@@ -372,11 +373,19 @@ export const getWalletOfOwner = async (setWalletOfOwner, wasGoodMethodToo) => {
 
 export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, wasGoodMethodToo) => {
   getBlockchainData(async (account, web3) => {
-    const contract = getContractStaking(web3);
-    // const walletOfOwner = await contract.methods.depositsOf(0, account).call();
-    // const walletOfOwner = await contract.methods.depositsOf(0, '0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890').call();
-    // setWalletOfOwnerStaked(walletOfOwner);
-    setWalletOfOwnerStaked([1,2,3]);
+    const acc = '0x2B7574F25c68bc274CC4857658b63F12fcBdf29A';
+    // const acc = account;
+    const urlGetTx = `https://api.snowtrace.io/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${acc}&startblock=0&endblock=999999999&sort=asc`;
+    let tokenIds = [];
+
+    axios.get(urlGetTx).then((res) => {
+      res.data.result.map((res) => {
+        if (res.to.toLowerCase() === stakingAddress.toLowerCase()) tokenIds.push(res.tokenID);
+      });
+
+      console.log(tokenIds);
+      setWalletOfOwnerStaked(tokenIds);
+    });
   }, wasGoodMethodToo);
 };
 

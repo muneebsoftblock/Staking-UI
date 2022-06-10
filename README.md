@@ -72,7 +72,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ## store room
 
       console.log(urlGetTx);
-console.log('to', res.data.result[0].to);
+      console.log('to', res.data.result[0].to);
       console.log('from', res.data.result[0].from);
 
 
