@@ -19,7 +19,7 @@ export const MainBoard = ({ walletOfOwner, walletOfOwnerStaked, wasGoodMethod })
         <Container className='connect__btn__control'>
           <Row>
             {!(walletOfOwnerStaked && walletOfOwner) ? (
-              <span class='card__red__btn' onClick={wasGoodMethod}>
+              <span className='card__red__btn' onClick={wasGoodMethod}>
                 Connect
               </span>
             ) : (
