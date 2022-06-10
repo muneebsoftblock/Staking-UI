@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Footer } from '../components/footer/Footer';
 import { MainBoard } from '../components/mainboard/MainBoard';
 import { TopNavbar } from '../components/navbar/TopNavbar';
-import { getReward, getTotalNftsStaked, getWalletOfOwner, getWalletOfOwnerStaked } from '../eth-setup/apis';
+import { getReward, getTotalNftsStaked, getWalletOfOwnerStaked } from '../eth-setup/apis';
 import { nftAddress, stakingAddress } from '../eth-setup/smart-contracts-config';
 
 const Home = () => {
@@ -13,16 +13,16 @@ const Home = () => {
   const [reward, setReward] = useState();
 
   const wasGoodMethod = () => {
-    getWalletOfOwnerStaked(setWalletOfOwnerStaked, wasGoodMethodToo);
+    getWalletOfOwnerStaked(setWalletOfOwnerStaked, setWalletOfOwner, wasGoodMethodToo);
     getTotalNftsStaked(setTotalNftsStaked, wasGoodMethodToo);
-    getWalletOfOwner(setWalletOfOwner, wasGoodMethodToo);
+    // getWalletOfOwner(setWalletOfOwner, wasGoodMethodToo);
     getReward(setReward, wasGoodMethodToo);
   };
 
   const wasGoodMethodToo = () => {
-    getWalletOfOwnerStaked(setWalletOfOwnerStaked);
+    getWalletOfOwnerStaked(setWalletOfOwnerStaked, setWalletOfOwner);
     getTotalNftsStaked(setTotalNftsStaked);
-    getWalletOfOwner(setWalletOfOwner);
+    // getWalletOfOwner(setWalletOfOwner);
     getReward(setReward);
   };
 

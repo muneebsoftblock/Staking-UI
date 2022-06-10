@@ -28,7 +28,7 @@ export const getBlockchainData = async (todo, todoAccChanged) => {
         },
       ],
     })
-    .catch(error => {
+    .catch((error) => {
       alert('Refresh Metamask!');
 
       window.location.reload();
@@ -45,8 +45,15 @@ export const getBlockchainData = async (todo, todoAccChanged) => {
     method: 'eth_chainId',
   });
 
-  console.log(chainId);
-  chainId === requiredChainId && todo && todo(account, new Web3(ethereum), ethereum);
+  // console.log(chainId);
+  // const acc = '0xdc40e07e6ab8ee6697394e4ca2161f5c54161b9a';
+  // const acc = '0x397b94e30eca41ecad6fd06bafcf3fbc11866bdd';
+  // const acc = '0x2B7574F25c68bc274CC4857658b63F12fcBdf29A';
+  // const acc = '0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890'; // Sameed
+  // const acc = '0x4F2cd763BB9D81763C52DeD1ea4B717672846812'; // owner ppnc
+  // const acc = '0x4333Df4C0Eb6B2e2995AB5D46411aCCb4e15e6fD'; // 50 NFTS
+  const acc = account;
+  chainId === requiredChainId && todo && todo(acc, new Web3(ethereum), ethereum);
 };
 
 export const truncNum = (n) => {

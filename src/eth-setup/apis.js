@@ -361,17 +361,17 @@ export const totalSupply = async (setTotalSupply) => {
   });
 };
 
-export const getWalletOfOwner = async (setWalletOfOwner, wasGoodMethodToo) => {
-  getBlockchainData(async (account, web3) => {
-    const contract = getContractNft(web3);
-    const walletOfOwner = await contract.methods.walletOfOwner(account).call();
-    // const walletOfOwner = await contract.methods.walletOfOwner('0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890').call();
-    setWalletOfOwner(walletOfOwner);
-    // setWalletOfOwner([2,3,5,8,9,6]);
-  }, wasGoodMethodToo);
-};
+// export const getWalletOfOwner = async (setWalletOfOwner, wasGoodMethodToo) => {
+//   getBlockchainData(async (account, web3) => {
+//     const contract = getContractNft(web3);
+//     const walletOfOwner = await contract.methods.walletOfOwner(account).call();
+//     // const walletOfOwner = await contract.methods.walletOfOwner('0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890').call();
+//     setWalletOfOwner(walletOfOwner);
+//     // setWalletOfOwner([2,3,5,8,9,6]);
+//   }, wasGoodMethodToo);
+// };
 
-export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, wasGoodMethodToo) => {
+export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, setWalletOfOwner, wasGoodMethodToo) => {
   Array.prototype.diff = function (a) {
     return this.filter(function (i) {
       return a.indexOf(i) < 0;
@@ -379,31 +379,33 @@ export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, wasGoodMeth
   };
 
   getBlockchainData(async (account, web3) => {
-    // const acc = '0xdc40e07e6ab8ee6697394e4ca2161f5c54161b9a';
-    // const acc = '0x397b94e30eca41ecad6fd06bafcf3fbc11866bdd';
-    // const acc = '0x2B7574F25c68bc274CC4857658b63F12fcBdf29A';
-    // const acc = '0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890'; // Sameed
-    // const acc = '0x4F2cd763BB9D81763C52DeD1ea4B717672846812'; // owner ppnc
-    // const acc = account;
+    const urlGetTx = `${explorer}/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${account}&startblock=0&endblock=999999999&sort=asc`;
+    console.log(urlGetTx);
 
-    const urlGetTx = `${explorer}/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${acc}&startblock=0&endblock=999999999&sort=asc`;
-    // console.log(urlGetTx);
-    
     let tokenIdsToStaking = [];
     let tokenIdsFromStaking = [];
+
+    let tokenIdsToAddress = [];
+    let tokenIdsFromAddress = [];
 
     axios.get(urlGetTx).then((res) => {
       res.data.result.map((res) => {
         if (res.to.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsToStaking.push(res.tokenID);
         else if (res.from.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsFromStaking.push(res.tokenID);
+
+        if (res.to.toLowerCase() === account.toLowerCase()) tokenIdsToAddress.push(res.tokenID);
+        else if (res.from.toLowerCase() === account.toLowerCase()) tokenIdsFromAddress.push(res.tokenID);
       });
 
-      const tokenIds = tokenIdsToStaking.diff(tokenIdsFromStaking);
-      // console.log({ tokenIdsToStaking });
-      // console.log({ tokenIdsFromStaking });
-      // console.log({ tokenIds });
+      const tokenIdsStaked = tokenIdsToStaking.diff(tokenIdsFromStaking);
+      const tokenIdsAccount = tokenIdsToAddress.diff(tokenIdsFromAddress);
 
-      setWalletOfOwnerStaked(tokenIds);
+      console.log({ tokenIdsToAddress });
+      console.log({ tokenIdsFromAddress });
+      console.log({ tokenIdsAccount });
+
+      setWalletOfOwner(tokenIdsAccount);
+      setWalletOfOwnerStaked(tokenIdsStaked);
     });
   }, wasGoodMethodToo);
 };
