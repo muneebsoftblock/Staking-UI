@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Web3 from 'web3';
 import { getBlockchainData } from './metamask-connection.js';
-import { erc20Address, gasFactor, getContractNft, getContractStaking, nftAddress, os, stakingAddress } from './smart-contracts-config.js';
+import { erc20Address, explorer, gasFactor, getContractNft, getContractStaking, nftAddress, os, stakingAddress } from './smart-contracts-config.js';
 
 export const purchaseTokensPlusPurchaseTokensFree = async (setLoading, howMany) => {
   if (!howMany || isNaN(howMany) || howMany == 0) {
@@ -252,7 +252,7 @@ export const withdraw = async (setLoading, tokenIds) => {
       if (!msg || msg === undefined) {
         msg = 'Insufficient funds';
       }
-      if (msg === 'The user must wait before nft can be withdrawn') msg = 'User must wait at least 24 hours before unstaking NFT'; 
+      if (msg === 'The user must wait before nft can be withdrawn') msg = 'User must wait at least 24 hours before unstaking NFT';
       else if (msg === 'send correct eth') msg = 'Send correct ETH';
       // else if (msg === 'Sale is not active') msg = 'Sale will start at 10pm UTC';
 
@@ -372,18 +372,33 @@ export const getWalletOfOwner = async (setWalletOfOwner, wasGoodMethodToo) => {
 };
 
 export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, wasGoodMethodToo) => {
+  Array.prototype.diff = function (a) {
+    return this.filter(function (i) {
+      return a.indexOf(i) < 0;
+    });
+  };
+
   getBlockchainData(async (account, web3) => {
-    const acc = '0x2B7574F25c68bc274CC4857658b63F12fcBdf29A';
-    // const acc = account;
-    const urlGetTx = `https://api.snowtrace.io/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${acc}&startblock=0&endblock=999999999&sort=asc`;
-    let tokenIds = [];
+    // const acc = '0xdc40e07e6ab8ee6697394e4ca2161f5c54161b9a';
+    // const acc = '0x397b94e30eca41ecad6fd06bafcf3fbc11866bdd';
+    // const acc = '0x2B7574F25c68bc274CC4857658b63F12fcBdf29A';
+    const acc = account;
+
+    const urlGetTx = `${explorer}/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${acc}&startblock=0&endblock=999999999&sort=asc`;
+    let tokenIdsToStaking = [];
+    let tokenIdsFromStaking = [];
 
     axios.get(urlGetTx).then((res) => {
       res.data.result.map((res) => {
-        if (res.to.toLowerCase() === stakingAddress.toLowerCase()) tokenIds.push(res.tokenID);
+        if (res.to.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsToStaking.push(res.tokenID);
+        else if (res.from.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsFromStaking.push(res.tokenID);
       });
 
-      console.log(tokenIds);
+      const tokenIds = tokenIdsToStaking.diff(tokenIdsFromStaking);
+      // console.log({ tokenIdsToStaking });
+      // console.log({ tokenIdsFromStaking });
+      // console.log({ tokenIds });
+
       setWalletOfOwnerStaked(tokenIds);
     });
   }, wasGoodMethodToo);
