@@ -2,9 +2,9 @@
 // export const gasFactor = 1;
 // export const requiredChainId = '0xa86a';
 // export const os = 'https://nftrade.com/assets/avalanche/';
-// export const erc20Address = '0x8349c226293A66d74Ee066A5a373224603d9949a';
-// export const nftAddress = '0xaA5691a800Fb2389B8dc715697e520dd0E7CA1BA';
-// export const stakingAddress = '0x4c2287F0101f78eCA176A589E4F1A588ff42Aad9';
+// export const erc20Address = '0x6E11735D00a149592fB50CF86c09CEceD60cB823';
+// export const nftAddress = '0xDeb284C05a8E162f83c7d8FD91cE6B0FD6916179';
+// export const stakingAddress = '0x4F2cd763BB9D81763C52DeD1ea4B717672846812';
 //
 //
 //
