@@ -1,20 +1,20 @@
 // Avax mainnet
-export const gasFactor = 1;
-export const requiredChainId = '0xa86a';
-export const os = 'https://nftrade.com/assets/avalanche/';
-export const erc20Address = '0x6E11735D00a149592fB50CF86c09CEceD60cB823';
-export const nftAddress = '0xDeb284C05a8E162f83c7d8FD91cE6B0FD6916179';
-export const stakingAddress = '0x4F2cd763BB9D81763C52DeD1ea4B717672846812';
+// export const gasFactor = 1;
+// export const requiredChainId = '0xa86a';
+// export const os = 'https://nftrade.com/assets/avalanche/';
+// export const erc20Address = '0x6E11735D00a149592fB50CF86c09CEceD60cB823';
+// export const nftAddress = '0xDeb284C05a8E162f83c7d8FD91cE6B0FD6916179';
+// export const stakingAddress = '0x4F2cd763BB9D81763C52DeD1ea4B717672846812';
 //
 //
 //
 // Avax Fuji Testnet
-// export const gasFactor = 1;
-// export const requiredChainId = '0xa869';
-// export const os = 'https://testnets.nftrade.com/assets/fuji/';
-// export const erc20Address = '0x836F9c9CeE483Ac0b8169a0e07C82930F870fD33';
-// export const nftAddress = '0x4814B175DE1E4ef980269f020C73c80F6a069A5b';
-// export const stakingAddress = '0x84ffA26f4e17706DC9851fcf0658802DB8A7213A';
+export const gasFactor = 1;
+export const requiredChainId = '0xa869';
+export const os = 'https://testnets.nftrade.com/assets/fuji/';
+export const erc20Address = '0x836F9c9CeE483Ac0b8169a0e07C82930F870fD33';
+export const nftAddress = '0xaA5691a800Fb2389B8dc715697e520dd0E7CA1BA';
+export const stakingAddress = '0x4c2287F0101f78eCA176A589E4F1A588ff42Aad9';
 //
 //
 //
