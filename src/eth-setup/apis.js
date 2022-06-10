@@ -364,15 +364,19 @@ export const getWalletOfOwner = async (setWalletOfOwner, wasGoodMethodToo) => {
   getBlockchainData(async (account, web3) => {
     const contract = getContractNft(web3);
     const walletOfOwner = await contract.methods.walletOfOwner(account).call();
+    // const walletOfOwner = await contract.methods.walletOfOwner('0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890').call();
     setWalletOfOwner(walletOfOwner);
+    // setWalletOfOwner([2,3,5,8,9,6]);
   }, wasGoodMethodToo);
 };
 
 export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, wasGoodMethodToo) => {
   getBlockchainData(async (account, web3) => {
     const contract = getContractStaking(web3);
-    const walletOfOwner = await contract.methods.depositsOf(0, account).call();
-    setWalletOfOwnerStaked(walletOfOwner);
+    // const walletOfOwner = await contract.methods.depositsOf(0, account).call();
+    // const walletOfOwner = await contract.methods.depositsOf(0, '0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890').call();
+    // setWalletOfOwnerStaked(walletOfOwner);
+    setWalletOfOwnerStaked([1,2,3]);
   }, wasGoodMethodToo);
 };
 
