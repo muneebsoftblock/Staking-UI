@@ -382,6 +382,7 @@ export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, wasGoodMeth
     // const acc = '0xdc40e07e6ab8ee6697394e4ca2161f5c54161b9a';
     // const acc = '0x397b94e30eca41ecad6fd06bafcf3fbc11866bdd';
     // const acc = '0x2B7574F25c68bc274CC4857658b63F12fcBdf29A';
+    // const acc = '0xA01575aa8B036A6A9F7cdB9a197a2AfaC7B31890'; // Sameed
     const acc = account;
 
     const urlGetTx = `${explorer}/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${acc}&startblock=0&endblock=999999999&sort=asc`;
