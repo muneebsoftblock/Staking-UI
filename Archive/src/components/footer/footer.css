@@ -1,0 +1,15 @@
+.ppnc__footer{
+    display: flex;
+    font-size: 14px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    border-top: #222 1px solid;
+    background-color: #181818;
+    color: #fff;
+
+
+}
+.ppnc__footer p {
+    margin-top: 12px;
+}

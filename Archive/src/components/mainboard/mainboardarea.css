@@ -1,0 +1,17 @@
+.main__board__area{
+    background-color: #181818;
+    color: #fff;
+    min-height: 100vh;
+    margin:0px auto;
+    padding:50px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.connect__btn__control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    margin:auto;
+}
