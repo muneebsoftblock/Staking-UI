@@ -1,3 +1,6 @@
+https://www.philihp.com/2018/removing-the-first-instance-of-an-element-from-a-es6-javascript-array.html
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
