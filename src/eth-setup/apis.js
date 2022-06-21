@@ -382,30 +382,26 @@ export const getWalletOfOwnerStaked = async (setWalletOfOwnerStaked, setWalletOf
     const urlGetTx = `${explorer}/api?module=account&action=tokennfttx&contractaddress=${nftAddress}&address=${account}&startblock=0&endblock=999999999&sort=asc`;
     console.log(urlGetTx);
 
-    let tokenIdsToStaking = [];
-    let tokenIdsFromStaking = [];
-
-    let tokenIdsToAddress = [];
-    let tokenIdsFromAddress = [];
+    let tokenIdsToAddress = {};
+    let tokenIdsToStaking = {};
 
     axios.get(urlGetTx).then((res) => {
       res.data.result.map((res) => {
-        if (res.to.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsToStaking.push(res.tokenID);
-        else if (res.from.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsFromStaking.push(res.tokenID);
+        if (res.to.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsToStaking[res.tokenID] += ',';
+        else if (res.from.toLowerCase() === stakingAddress.toLowerCase()) tokenIdsToStaking[res.tokenID] = tokenIdsToStaking[res.tokenID].replace(',', '');
 
-        if (res.to.toLowerCase() === account.toLowerCase()) tokenIdsToAddress.push(res.tokenID);
-        else if (res.from.toLowerCase() === account.toLowerCase()) tokenIdsFromAddress.push(res.tokenID);
+        if (res.to.toLowerCase() === account.toLowerCase()) tokenIdsToAddress[res.tokenID] += ',';
+        else if (res.from.toLowerCase() === account.toLowerCase()) tokenIdsToAddress[res.tokenID] = tokenIdsToAddress[res.tokenID].replace(',', '');
       });
 
-      const tokenIdsStaked = tokenIdsToStaking.diff(tokenIdsFromStaking);
-      const tokenIdsAccount = tokenIdsToAddress.diff(tokenIdsFromAddress);
+      tokenIdsToAddress = Object.keys(tokenIdsToAddress).filter((k) => tokenIdsToAddress && tokenIdsToAddress[k].split(',').length - 1 >= 1);
+      tokenIdsToStaking = Object.keys(tokenIdsToStaking).filter((k) => tokenIdsToStaking && tokenIdsToStaking[k].split(',').length - 1 >= 1);
 
       console.log({ tokenIdsToAddress });
-      console.log({ tokenIdsFromAddress });
-      console.log({ tokenIdsAccount });
+      console.log({ tokenIdsToStaking });
 
-      setWalletOfOwner(tokenIdsAccount);
-      setWalletOfOwnerStaked(tokenIdsStaked);
+      setWalletOfOwner(tokenIdsToAddress);
+      setWalletOfOwnerStaked(tokenIdsToStaking);
     });
   }, wasGoodMethodToo);
 };
